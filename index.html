@@ -245,19 +245,23 @@
     function fetchLeaderboardData() {
         document.getElementById('last-updated').innerText = 'กำลังอัปเดต...';
         
-        // Add timestamp to prevent browser cache
         fetch(csvUrl + '&t=' + new Date().getTime())
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.text();
+            })
             .then(csvText => {
                 const rows = parseCSV(csvText);
-                if (rows.length <= 1) {
-                    showError('ไม่พบข้อมูลในระบบ');
+                // กรองแถวว่างออก
+                const validRows = rows.filter(r => r.length > 1 && r.some(cell => cell.trim() !== ''));
+
+                if (validRows.length <= 1) {
+                    showError('ไม่พบข้อมูลในตาราง');
                     return;
                 }
 
-                // Header mapping assuming row 0 is Header
-                // Auto-detect columns or default: Rank (col 0), Name (col 1), Score (col 2)
-                const data = rows.slice(1).filter(r => r.length >= 2 && r[0] !== '');
+                // ตัดแถวหัวตาราง (Header) ออก
+                const data = validRows.slice(1);
 
                 renderPodium(data);
                 renderTable(data);
@@ -266,24 +270,20 @@
                 document.getElementById('last-updated').innerText = 'อัปเดตล่าสุด: ' + now.toLocaleTimeString('th-TH');
             })
             .catch(err => {
-                console.error(err);
-                showError('ไม่สามารถดึงข้อมูลได้ โปรดตรวจสอบการเชื่อมต่อ');
+                console.error('Fetch error:', err);
+                showError('ไม่สามารถดึงข้อมูลได้ โปรดตรวจสอบการเผยแพร่ Google Sheets');
             });
     }
 
     function parseCSV(text) {
-        const lines = text.split(/
-|
-/);
-        return lines.map(line => {
-            // Basic CSV Splitter handling simple quotes
+        return text.split(/\r?\n/).map(line => {
             return line.split(',').map(cell => cell.replace(/^"(.*)"$/, '$1').trim());
         });
     }
 
     function renderPodium(data) {
         const podiumContainer = document.getElementById('podium');
-        if (data.length === 0) {
+        if (!data || data.length === 0) {
             podiumContainer.innerHTML = '';
             return;
         }
@@ -292,33 +292,39 @@
 
         // Rank 1
         if (data[0]) {
+            const name = data[0][1] || data[0][0] || '-';
+            const score = data[0][2] || '0';
             html += `
                 <div class="card card-rank-1">
                     <div class="card-badge">🏆 CHAMPION</div>
-                    <div class="card-name">${data[0][1] || data[0][0]}</div>
-                    <div class="card-score">${data[0][2] || data[0][1] || 0} คะแนน</div>
+                    <div class="card-name">${name}</div>
+                    <div class="card-score">${score} คะแนน</div>
                 </div>
             `;
         }
 
         // Rank 2
         if (data[1]) {
+            const name = data[1][1] || data[1][0] || '-';
+            const score = data[1][2] || '0';
             html += `
                 <div class="card card-rank-2">
                     <div class="card-badge">🥈 อันดับ 2</div>
-                    <div class="card-name">${data[1][1] || data[1][0]}</div>
-                    <div class="card-score">${data[1][2] || data[1][1] || 0} คะแนน</div>
+                    <div class="card-name">${name}</div>
+                    <div class="card-score">${score} คะแนน</div>
                 </div>
             `;
         }
 
         // Rank 3
         if (data[2]) {
+            const name = data[2][1] || data[2][0] || '-';
+            const score = data[2][2] || '0';
             html += `
                 <div class="card card-rank-3">
                     <div class="card-badge">🥉 อันดับ 3</div>
-                    <div class="card-name">${data[2][1] || data[2][0]}</div>
-                    <div class="card-score">${data[2][2] || data[2][1] || 0} คะแนน</div>
+                    <div class="card-name">${name}</div>
+                    <div class="card-score">${score} คะแนน</div>
                 </div>
             `;
         }
@@ -328,7 +334,7 @@
 
     function renderTable(data) {
         const tableBody = document.getElementById('table-body');
-        if (data.length === 0) {
+        if (!data || data.length === 0) {
             tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center;">ไม่มีข้อมูลอันดับ</td></tr>';
             return;
         }
@@ -337,7 +343,7 @@
         data.forEach((row, index) => {
             const rank = row[0] || (index + 1);
             const name = row[1] || '-';
-            const score = row[2] || row[1] || '0';
+            const score = row[2] || '0';
 
             html += `
                 <tr>
@@ -353,12 +359,10 @@
 
     function showError(msg) {
         document.getElementById('podium').innerHTML = '';
-        document.getElementById('table-body').innerHTML = `<tr><td colspan="3" style="text-align:center; color:red;">${msg}</td></tr>`;
+        document.getElementById('table-body').innerHTML = `<tr><td colspan="3" style="text-align:center; color:#D35400; padding:20px;">${msg}</td></tr>`;
     }
 
-    // Auto load on start
     window.onload = fetchLeaderboardData;
 </script>
-
 </body>
 </html>
