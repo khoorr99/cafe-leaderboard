@@ -1,244 +1,460 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cozy Café Leaderboard</title>
-    <style>
-        /* Theme Colors: Espresso (#3E2723), Caramel (#F5C77E), Milk Tea (#E0D5C1), Thai Tea (#FFCCBC), Cream (#FDFBF7) */
-        @import url('https://fonts.googleapis.com/css2?family=Tahoma&display=swap');
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Tahoma', sans-serif;
-        }
+Gemini
+แชทใหม่
+ค้นหาแชท
+คลัง
+Notebook ใหม่
+Patient Confidentiality Protocols for Healthcare Assistants
+The Protective Spirits of the Floating House
+Notebook ทั้งหมด
+เชื่อมต่อไม่ได้
+โหลดซ้ำ
+การสนทนากับ Gemini
+บัตรคะแนน (Scorecard) ไม่มีให้เลือก
 
-        body {
-            background-color: #FDFBF7;
-            color: #3E2723;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            padding: 30px 15px;
-        }
+ขออภัยด้วยครับ! ใน Looker Studio เวอร์ชันภาษาไทย เมนูอาจจะไม่ได้ใช้คำว่า "บัตรคะแนน" โดยตรงครับ
 
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background: #FFFFFF;
-            border-radius: 24px;
-            padding: 28px;
-            box-shadow: 0 10px 25px rgba(62, 39, 35, 0.08);
-            border: 1px solid #E0D5C1;
-        }
+คุณสามารถเลือกใช้ตัวเลือกนี้แทนได้เลยครับ:
 
-        /* Header Banner */
-        .header-banner {
-            background-color: #3E2723;
-            color: #FFFFFF;
-            text-align: center;
-            padding: 18px 20px;
-            border-radius: 16px;
-            font-size: 22px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 12px rgba(62, 39, 35, 0.15);
-        }
+📍 วิธีเลือก "บัตรคะแนน" ใน Looker Studio
+ไปที่เมนูด้านบน กดปุ่ม "เพิ่มแผนภูมิ" (Add a chart)
 
-        /* Podium Cards Section */
-        .podium-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
-        }
+ในรายการแผนภูมิที่เด้งลงมา ให้มองหาหัวข้อ "การ์ดคะแนน" หรือ "Scorecard" (ไอคอนจะเป็นรูปตัวเลขเดี่ยวๆ เช่น 123)
 
-        .card {
-            border-radius: 18px;
-            padding: 20px 15px;
-            text-align: center;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            position: relative;
-        }
+คลิกเลือก  score card / การ์ดคะแนน  แล้วนำมาลากวางบนหน้ากระดาษได้เลยครับ
 
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
-        }
+💡 วิธีสำรอง (ถ้าหาไม่เจอจริงๆ)
+หากหาปุ่มการ์ดคะแนนไม่เจอ สามารถใช้ "ตาราง" (Table) ขนาดเล็ก แทนได้ครับ:
 
-        .card-badge {
-            font-size: 13px;
-            font-weight: bold;
-            padding: 4px 12px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 10px;
-            background: rgba(255,255,255,0.6);
-        }
+กด เพิ่มแผนภูมิ (Add a chart) > เลือก ตาราง (Table)
 
-        .card-name {
-            font-size: 16px;
-            font-weight: bold;
-            color: #3E2723;
-            margin-bottom: 8px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+ลากปรับขนาดตารางให้เล็กๆ เท่ากรอบการ์ด
 
-        .card-score {
-            font-size: 26px;
-            font-weight: bold;
-            color: #3E2723;
-        }
+ในแท็บ ข้อมูล (Data) เลือก มิติข้อมูล (Dimension) เป็น ชื่อ-นามสกุล และ ตัววัด (Metric) เป็น คะแนน
 
-        /* Card Themes */
-        .card-rank-1 {
-            background-color: #F5C77E; /* Caramel */
-            border: 2px solid #E6B055;
-            grid-column: span 3;
-        }
-        @media (min-width: 600px) {
-            .card-rank-1 { grid-column: span 3; }
-            .card-rank-2, .card-rank-3 { grid-column: span 1.5; }
-        }
+ในแท็บ สไตล์ (Style) ให้เลือกซ่อน หัวตาราง (Header), ซ่อน ส่วนท้าย (Footer) และซ่อน หมายเลขแถว (Row numbers)
 
-        .card-rank-2 {
-            background-color: #E0D5C1; /* Milk Tea */
-            border: 1px solid #C8BC9E;
-        }
+จากนั้นปรับสีพื้นหลังการ์ดเป็นสีคาราเมล #F5C77E และปรับความโค้งมน (Corner Radius) เป็น 16 หรือ 20 เท่านี้ก็ได้การ์ดอันดับสวยๆ สไตล์คาเฟ่เหมือนกันเลยครับ!
 
-        .card-rank-3 {
-            background-color: #FFCCBC; /* Thai Tea */
-            border: 1px solid #E6B2A2;
-        }
+เห็นภาพชัดเลยครับ! ใน Looker Studio ภาษาไทย เมนูนี้ถูกใช้ชื่อว่า "ตารางสรุปสถิติ" ครับ
 
-        /* Table Section */
-        .table-container {
-            overflow-x: auto;
-            border-radius: 14px;
-            border: 1px solid #E0D5C1;
-        }
+คุณสามารถกดเลือกอันนี้ได้เลยครับ:
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            background-color: #FFFFFF;
-        }
+ดูที่หัวข้อ ตารางสรุปสถิติ (ลำดับที่ 2 จากบนสุด)
 
-        th {
-            background-color: #3E2723;
-            color: #FFFFFF;
-            padding: 14px 18px;
-            font-size: 14px;
-            font-weight: bold;
-        }
+คลิกเลือกรูป Total 1,168 (อันแรกสุดทางซ้าย)
 
-        td {
-            padding: 12px 18px;
-            border-bottom: 1px solid #F0EAE1;
-            font-size: 14px;
-            color: #3E2723;
-        }
+นำมาลากวางบนหน้ากระดาษเพื่อทำเป็นการ์ดอันดับได้เลยครับ!
 
-        tr:nth-child(even) {
-            background-color: #FAF7F2;
-        }
+มาถูกทางแล้วครับ! ตอนนี้กล่องแสดงผลเป็น Record Count (นับจำนวนแถว) อยู่ เราจะเปลี่ยนให้มันโชว์ คะแนน พร้อมแต่งสีคาราเมลนวลๆ ตามสเต็ปนี้เลยครับ
 
-        tr:hover {
-            background-color: #F5EFE6;
-        }
+1. เปลี่ยนค่าให้โชว์ "คะแนน" (Setup Data)
+คลิกที่กล่อง Record Count ใบนั้น
 
-        .rank-col {
-            width: 80px;
-            text-align: center;
-            font-weight: bold;
-        }
+มองไปที่แถบ "ข้อมูล" (Data) ฝั่งขวา
 
-        .score-col {
-            width: 120px;
-            text-align: right;
-            font-weight: bold;
-            color: #D35400;
-        }
+ตรงหัวข้อ ตัววัด (Metric) จะเห็นคำว่า Record Count อยู่
 
-        /* Footer & Reload Button */
-        .footer-tools {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-            font-size: 12px;
-            color: #8D6E63;
-        }
+ลากฟิลด์ คะแนน จากรายการฟิลด์ทางขวาสุด มาวางทับคำว่า Record Count (หรือคลิกที่คำว่า Record Count แล้วพิมพ์ค้นหา คะแนน)
 
-        .btn-refresh {
-            background-color: #3E2723;
-            color: #FFFFFF;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
+2. ใส่สีคาราเมลและทำมุมโค้ง (Style Champion Card)
+สลับไปที่แท็บ "สไตล์" (Style) ฝั่งขวา
 
-        .btn-refresh:hover {
-            background-color: #5D4037;
-        }
+เลื่อนลงมาที่หัวข้อ พื้นหลังและเส้นขอบ (Background & Border):
 
-        .loading {
-            text-align: center;
-            padding: 40px;
-            font-size: 16px;
-            color: #8D6E63;
-        }
-    </style>
-</head>
-<body>
+สีพื้นหลัง (Background): เลือกเปลี่ยนเป็นสีคาราเมล #F5C77E
 
-<div class="container">
-    <!-- Header Banner -->
-    <div class="header-banner">
-        ☕ Cafe De Memories - Daily Quiz Leaderboard
-    </div>
+รัศมีมุม (Corner Radius): ปรับเป็น 20
 
-    <!-- Top 3 Cards -->
-    <div class="podium-container" id="podium">
-        <div class="loading">กำลังโหลดข้อมูลอันดับ...</div>
-    </div>
+ซ่อนชื่อตัววัดคำว่า "คะแนน" ด้านบน (Optional):
 
-    <!-- Main Table -->
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th class="rank-col">อันดับ</th>
-                    <th>ชื่อผู้เล่น</th>
-                    <th class="score-col">คะแนน</th>
-                </tr>
-            </thead>
-            <tbody id="table-body">
-                <tr>
-                    <td colspan="3" class="loading">กำลังดึงข้อมูลจาก Google Sheets...</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+เลื่อนขึ้นไปที่หัวข้อ ป้ายกำกับ (Metric Name/Label)
 
-    <!-- Footer Tools -->
-    <div class="footer-tools">
-        <span id="last-updated">อัปเดตล่าสุด: -</span>
-        <button class="btn-refresh" onclick="fetchLeaderboardData()">🔄 รีเฟรชข้อมูล</button>
-    </div>
-</div>
+ติ๊กถูกที่ "ซ่อนป้ายกำกับ" (Hide metric name) หรือเลือกจัดตำแหน่งเป็นซ่อน เพื่อให้เห็นแค่ตัวเลขชัดๆ
 
+3. ใส่ชื่อผู้เล่นและยศ Champion
+ไปที่เมนูด้านบน เลือก แทรก (Insert) > กล่องข้อความ (Text Box)
+
+วาดกล่องข้อความไว้ภายในการ์ดใบนี้ พิมพ์ว่า 🏆 CHAMPION และพิมพ์ชื่อผู้เล่น คุณ นฤธร ไว้ด้านข้างหรือด้านล่างตัวเลขคะแนน  
+HTML
+
+เปลี่ยนสีข้อความในกล่องเป็นสีน้ำตาลเอสเพรสโซ #3E2723 ฟอนต์ Tahoma ตัวหนา
+
+ทำเสร็จแล้วก็จะได้การ์ดอันดับ 1 (Champion) สีคาราเมลนุ่มๆ พร้อมใช้งานทันทีครับ!
+
+จากภาพ ตอนนี้ฝั่งขวาสุด (รายการช่องข้อมูล) มีแค่ฟิลด์ Record Count อย่างเดียวครับ ทำให้ลาก คะแนน มาใส่ไม่ได้ ต้องไปดึงฟิลด์จาก Google Sheets เข้ามาก่อนครับ
+
+วิธีแก้ดึงฟิลด์คะแนนมาใช้:
+
+กดปุ่มเพิ่มช่อง:
+
+มองไปที่มุมขวาด้านล่างสุดของรูปภาพ กดปุ่ม + เพิ่มช่อง (สีฟ้า)
+
+ตั้งค่าช่องคะแนน:
+
+ชื่อช่อง (Field Name): พิมพ์คำว่า คะแนน
+
+สูตร (Formula): พิมพ์ชื่อคอลัมน์คะแนนตรงกับใน Google Sheets ของคุณ หรือหากคอลัมน์คะแนนใน Sheet อยู่คอลัมน์ B/C ให้พิมพ์ชื่อคอลัมน์นั้นเลย
+
+จากนั้นกด บันทึก (Save) และ เสร็จสิ้น (Done)
+
+💡 วิธีที่ง่ายที่สุด (รีเฟรชฟิลด์แหล่งข้อมูล)
+ถ้าใน Google Sheets มีคอลัมน์คะแนนอยู่แล้ว แต่ Looker Studio ยังไม่ดึงมา:
+
+ดูที่เมนูด้านบน เลือก ทรัพยากร (Resource) > จัดการแหล่งข้อมูลที่เพิ่มแล้ว (Manage added data sources)
+
+ตรงชื่อ Cafe De Memories (คะแนน)... ให้กด แก้ไข (Edit)
+
+มองไปที่มุมซ้ายล่าง กดปุ่ม รีเฟรชช่องข้อมูล (Refresh fields)
+
+ระบบจะดึงคอลัมน์ คะแนน, ชื่อ-นามสกุล และ เวลาที่ใช้ จาก Google Sheets มาโชว์ในรายการทางขวาสุดทันทีครับ
+
+เมื่อฟิลด์ คะแนน ขึ้นมาทางขวาแล้ว ให้ลากมาวางทับกล่อง AUT Record Count ตรงหัวข้อ เมตริก ในภาพได้เลยครับ
+
+กดเลือก "เพิ่มฟิลด์ที่คำนวณแล้ว" ตัวแรกสุดในเมนูที่เด้งขึ้นมาได้เลยครับ!
+
+1
+สร้างฟิลด์คะแนน
+1 min
+เลือกเมนู "เพิ่มฟิลด์ที่คำนวณแล้ว" จากนั้นตั้งชื่อฟิลด์ว่า คะแนน แล้วใส่สูตรชื่อคอลัมน์คะแนนตรงกับใน Google Sheets แล้วกด บันทึก (Save)
+
+2
+นำฟิลด์มาใช้งาน
+30 sec
+เมื่อบันทึกเสร็จ ฟิลด์ คะแนน จะปรากฏในรายการฝั่งขวา ให้ลากมาวางทับคำว่า Record Count ตรงช่อง เมตริก ได้ทันที
+
+สูตร เอาจากตรงไหน
+
+สูตรดึงมาจาก ชื่อคอลัมน์ใน Google Sheets ของคุณได้เลยครับ!
+
+📍 วิธีใส่สูตรในหน้า "เพิ่มฟิลด์ที่คำนวณแล้ว"
+ชื่อฟิลด์ (Field Name): พิมพ์คำว่า คะแนน
+
+สูตร (Formula): พิมพ์ ชื่อหัวคอลัมน์ ที่เก็บคะแนนใน Google Sheets ของคุณได้เลย
+
+เช่น ถ้าใน Google Sheets แถวแรกสุดเขียนหัวคอลัมน์ไว้ว่า คะแนน ให้พิมพ์คำว่า คะแนน ลงในช่องสูตร
+
+ตอนพิมพ์ พิมพ์ตัวอักษรแรก ระบบจะมีเมนูแนะนำตัวเลือกเด้งขึ้นมาให้คลิกเลือกได้ทันทีครับ
+
+เสร็จแล้วกด บันทึก (Save) ที่มุมขวาล่าง และกด เสร็จสิ้น (Done)
+
+💡 ทริคแนะนำเพิ่มเติม (ถ้าไม่อยากพิมพ์สูตรเอง)
+สาเหตุที่ดึงมาแต่ Record Count อาจเพราะตอนเชื่อมต่อ Looker Studio ระบบอ่านหัวตารางใน Google Sheets ไม่เจอ วิธีที่ง่ายที่สุดโดยไม่ต้องพิมพ์สูตรเองคือ:
+
+ดูเมนูด้านบนสุด เลือก ทรัพยากร (Resource) > จัดการแหล่งข้อมูลที่เพิ่มแล้ว (Manage added data sources)
+
+ตรงชื่อไฟล์ Google Sheets ของคุณ ให้กด แก้ไข (Edit)
+
+มองมุมซ้ายล่างสุด กดปุ่ม รีเฟรชช่องข้อมูล (Refresh fields)
+
+ระบบจะดึงทุกคอลัมน์ (ชื่อ-นามสกุล, คะแนน, เวลาที่ใช้) ออกมาให้อัตโนมัติโดยไม่ต้องใส่สูตรเลยครับ
+
+ไม่เจอ เลือกทรัพยากร
+
+เมนูภาษาไทยของ Looker Studio เวอร์ชันปัจจุบันจะเปลี่ยนชื่อจาก "ทรัพยากร" เป็น "แหล่งข้อมูล" หรือซ่อนอยู่ในเมนู "จัดการ" แทนครับ
+
+เลือกปรับตาม 2 วิธีนี้ได้ง่ายๆ เลยครับ:
+
+📍 วิธีที่ 1: ผ่านแถบเมนูด้านบน
+ดูแถบเมนูด้านบนสุดของหน้าจอ (แถบที่มีคำว่า ไฟล์, แก้ไข, มุมมอง...)
+
+เลือกเมนู จัดการ (Manage) หรือ แหล่งข้อมูล (Resource)
+
+คลิกเลือก "จัดการแหล่งข้อมูลที่เพิ่มแล้ว" (Manage added data sources)
+
+กด "แก้ไข" (Edit) หลังชื่อไฟล์ Google Sheets ของคุณ
+
+มองมุมซ้ายล่าง กดปุ่ม "รีเฟรชช่องข้อมูล" (Refresh fields)
+
+📍 วิธีที่ 2: กดจากฝั่งขวาตรงๆ (ง่ายที่สุด)
+มองแถบ ข้อมูล (Data) ด้านขวาสุดของหน้าจอ
+
+เลื่อนเอาเมาส์ไปวางเหนือชื่อไฟล์ของคุณ (บรรทัดสีเขียวรูป Google Sheets)
+
+จะมีไอคอน รูปดินสอ ✏️ ปรากฏขึ้นมา ให้คลิกที่รูปดินสอนั้น
+
+ระบบจะพาเข้าไปหน้าตั้งค่าช่องข้อมูล ให้มองที่มุมซ้ายล่างสุดแล้วกด "รีเฟรชช่องข้อมูล" (Refresh fields) ได้ทันทีครับ
+
+เมื่อรีเฟรชแล้ว รายชื่อคอลัมน์ คะแนน, ชื่อ-นามสกุล และ เวลาที่ใช้ จะเด้งขึ้นมาฝั่งขวาให้ลากใช้งานได้ทันทีโดยไม่ต้องใส่สูตรครับ
+
+เราใช้ HTML ในการแสดงข้อมูงในชีตเลยไม่ได้เหรอ
+
+ทำได้ครับ! ถ้าไม่อยากสร้างบน Looker Studio คุณสามารถดึงข้อมูลจาก Google Sheets ไปแสดงผลบนหน้าเว็บ HTML ที่ออกแบบไว้ได้โดยตรงเลยครับ
+
+โดยวิธีที่นิยมและทำง่ายที่สุดสำหรับ Google Sheets มีอยู่ 2 วิธีหลักๆ ครับ:
+
+1. ใช้ Apps Script ทำเป็น Web App (แนะนำ - ทำง่ายที่สุด)
+ฝังโค้ด HTML ไว้ใน Google Sheets โดยตรง แล้วเปิดใช้งานระบบ Apps Script เพื่อสร้างเป็นลิงก์หน้าเว็บออกมา
+
+ข้อดี: ไม่ต้องเช่า Server, ข้อมูลอัปเดตแบบ Real-time ทันทีที่มีผู้เล่นส่งแบบทดสอบเข้ามา, เขียนทุกอย่างรวมในที่เดียวได้เลย
+
+วิธีทำแบบย่อ:
+
+ใน Google Sheets ไปที่เมนู ส่วนขยาย (Extensions) > Apps Script
+
+เขียนโค้ดดึงข้อมูลจาก Sheet แล้วสั่งให้ Render หน้าไฟล์ index.html ออกมา
+
+กด นำไปใช้งาน (Deploy) > การนำไปใช้งานใหม่ (New deployment) > เลือกประเภท เว็บแอป (Web app)
+
+ตั้งค่าการเข้าถึงเป็น "ทุกคน" (Anyone) คุณจะได้ URL หน้า Leaderboard มาใช้งานทันที
+
+2. ดึงข้อมูลผ่าน Google Sheets API / CSV / SheetDB ไปใส่ใน GitHub Pages
+หากคุณมีหน้าเว็บ HTML/CSS สวยๆ โฮสต์อยู่บน GitHub Pages อยู่แล้ว สามารถให้ JavaScript ในหน้า HTML ดึงข้อมูลจาก Sheets มาดึงแสดงผลได้
+
+วิธีที่ 1 (ดึงผ่าน CSV Link): ใน Google Sheets ไปที่ ไฟล์ (File) > แชร์ (Share) > เผยแพร่ไปยังเว็บ (Publish to web) > เลือกส่งออกเป็นไฟล์ CSV จากนั้นใช้ JavaScript (fetch) อ่านค่า CSV มาแปลงเป็นตาราง HTML
+
+วิธีที่ 2 (ดึงผ่าน API/SheetDB): ใช้บริการแปลง Google Sheets เป็น REST API (เช่น SheetDB หรือ SheetBest) แล้วใช้ JavaScript ดึง JSON มาสร้างตารางคะแนนแบบไดนามิก
+
+💡 เปรียบเทียบ Looker Studio vs HTML เว็บแอป
+จุดเด่น	Looker Studio	HTML + Google Sheets API
+ความสะดวกในการทำ	ลากวางชิ้นส่วน ไม่ต้องเขียนโค้ด	ต้องเขียน HTML/CSS/JS เอง
+การปรับแต่งดีไซน์	มีกรอบจำกัดตามฟีเจอร์ที่มี	อิสระ 100% ทำการ์ดอนิเมชัน โหลดฟอนต์ ใส่แสงเงาได้ตามใจ
+ความเร็วในการดึงข้อมูล	มี Delay 1–5 นาที (ตามรอบ Refresh)	Real-time ทันที หรือตั้งให้ดึงใหม่ทุกกี่วินาทีก็ได้
+หากคุณมีไฟล์ HTML สวยๆ ที่สร้างไว้ก่อนหน้านี้แล้ว การเลือกทำเป็น Apps Script Web App หรือดึง CSV ผ่าน GitHub Pages จะตอบโจทย์ดีไซน์ Cozy Café ได้เป๊ะตามต้องการมากกว่า Looker Studio ครับ!
+
+ใช้ HTML ที่เคยส่งมาก่อนหน้านี้ ได้เลยไหม เหลือแค่ดึงข้อมูลจากชีต
+
+ข้อควรระวังเรื่องการอัปโหลดไฟล์
+เนื่่องจากในห้องแชตนี้ ยังไม่มีไฟล์ HTML ถูกส่งเข้ามา หากคุณมีไฟล์ HTML หรือชุดโค้ดดีไซน์ Cozy Café เดิมอยู่ ให้คัดลอกโค้ดมาวางในแชตนี้ได้เลยครับ เพื่อนำไปเชื่อมกับ Google Sheets
+
+สามารถใช้โค้ด HTML สไตล์ Cozy Café เดิมของคุณเชื่อมดึงข้อมูลตรงจาก Google Sheets ได้เลยครับ โดยวิธีที่ง่ายที่สุดและไม่ต้องตั้งค่า Server คือการใช้ Google Apps Script
+
+☕ วิธีเชื่อม HTML กับ Google Sheets (ผ่าน Apps Script)
+1
+เปิดหน้าแก้ไข Apps Script
+1 min
+เปิดไฟล์ Google Sheets ของคุณ > ไปที่เมนู ส่วนขยาย (Extensions) > Apps Script
+
+2
+เพิ่มไฟล์ HTML และวางโค้ดเดิม
+2 min
+ทางซ้ายมือ กดเครื่องหมาย + ข้างๆ คำว่า Files > เลือก HTML ตั้งชื่อไฟล์ว่า Index
+
+นำโค้ด HTML/CSS ธีม Cozy Café ที่คุณมี มาวางแทนที่เนื้อหาในไฟล์ Index.html ได้เลย
+
+3
+ใส่โค้ดฝั่ง Apps Script (Code.gs)
+2 min
+สลับไปที่ไฟล์ Code.gs ลบโค้ดเดิมออกทั้งหมด แล้ววางโค้ดสำหรับดึงข้อมูลจากแท็บ Leaderboard ด้านล่างนี้:
+
+JavaScript
+function doGet() {
+  return HtmlService.createHtmlOutputFromFile('Index')
+      .setTitle('Cozy Café Leaderboard')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+}
+
+function getLeaderboardData() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Leaderboard");
+  var data = sheet.getDataRange().getValues();
+  data.shift(); // ลบแถวหัวตาราง (Header) ออก
+  return data;
+}
+4
+ใส่ JS ฝั่ง HTML เพื่อดึงข้อมูลมาโชว์
+2 min
+ในไฟล์ Index.html ให้เพิ่มโค้ด JavaScript ก่อนปิดแท็ก </body> เพื่อเรียกใช้ข้อมูลจาก Sheet มาใส่ตารางหรือการ์ดคะแนน:
+
+HTML
+<script>
+  window.onload = function() {
+    google.script.run.withSuccessHandler(showData).getLeaderboardData();
+  };
+
+  function showData(data) {
+    // data จะมาเป็น Array 2 มิติ [ [อันดับ, ชื่อ, คะแนน], ... ]
+    // นำ data ไปวนลูปสร้าง <tr> ใส่ในตาราง <table> ของคุณได้ทันที
+    console.log(data);
+  }
+</script>
+5
+เผยแพร่เป็น Web App (Deploy)
+1 min
+กดปุ่ม นำไปใช้งาน (Deploy) มุมขวาบน > การนำไปใช้งานใหม่ (New deployment) > เลือกประเภท เว็บแอป (Web app) > ตั้งค่า ผู้ที่มีสิทธิ์เข้าถึง เป็น "ทุกคน" (Anyone) แล้วกด นำไปใช้งาน
+
+💡 ตรวจสอบผลลัพธ์
+เมื่อเปิดลิงก์ URL Web App ที่ได้ ระบบจะดึงข้อมูลจากหน้า Google Sheets มาแสดงผลในดีไซน์ HTML ของคุณทันที และเมื่อมีคะแนนอัปเดตใหม่ใน Sheet เพียงแค่กด Refresh หน้าเว็บ ข้อมูลก็จะอัปเดตทันทีครับ
+
+แล้วทำแบบไม่ผ่าน app script ได้ไหม
+
+ทำได้ครับ! ถ้าไม่อยากยุ่งกับ Apps Script สามารถให้หน้า HTML/JS ดึงข้อมูลจาก Google Sheets ตรงๆ ได้เลย โดยเปลี่ยน Google Sheet ให้ส่งออกข้อมูลเป็น JSON หรือ CSV ครับ
+
+มี 2 วิธีหลักๆ ที่นิยมและทำได้ทันทีครับ:
+
+วิธีที่ 1: เผยแพร่เป็น CSV (ง่ายที่สุด ไม่ต้องใช้ API Key)
+ตั้งค่าใน Google Sheets:
+
+เปิด Google Sheets > ไปที่ ไฟล์ (File) > แชร์ (Share) > เผยแพร่ไปยังเว็บ (Publish to web)
+
+เลือกแท็บ Leaderboard และเลือกประเภทเป็น Comma-separated values (.csv)
+
+กด เผยแพร่ (Publish) แล้วคัดลอก URL ที่ได้มา
+
+เขียน JS ใน HTML ดึงข้อมูล:
+
+JavaScript
+const sheetCsvUrl = 'ใส่_URL_CSV_ที่ได้จาก_Google_Sheets';
+
+fetch(sheetCsvUrl)
+  .then(response => response.text())
+  .then(csvText => {
+    // แปลงข้อมูล CSV เป็น Array
+    const rows = csvText.split('\n').map(row => row.split(','));
+    const data = rows.slice(1); // ตัดแถวหัวตาราง (Header) ออก
+    
+    console.log(data); // ได้ Array [[อันดับ, ชื่อ, คะแนน], ...] นำไปสร้างตาราง HTML ได้เลย
+  });
+วิธีที่ 2: ใช้ Google Sheets Visualization API (ได้ข้อมูลเป็น JSON)
+วิธีนี้ไม่ต้องกด Publish เป็น CSV แค่ตั้งค่าแชร์ไฟล์ Sheet ให้เป็น "ทุกคนที่มีลิงก์สามารถดูได้" (Anyone with the link can view)
+
+คัดลอก Sheet ID จาก URL ของคุณ (รหัสยาวๆ อยู่ระหว่าง /d/ ถึง /edit)
+
+ใช้ URL นี้ใน JavaScript เพื่อดึง JSON:
+
+JavaScript
+const sheetId = 'ใส่_SHEET_ID_ของคุณ';
+const sheetName = 'Leaderboard';
+const jsonUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+
+fetch(jsonUrl)
+  .then(res => res.text())
+  .then(data => {
+    // ตัดข้อความส่วนเกินของ Viz API ออกเพื่อให้ได้ JSON แท้
+    const jsonData = JSON.parse(data.substring(47, data.length - 2));
+    const rows = jsonData.table.rows.map(row => row.c.map(cell => cell ? cell.v : ''));
+    
+    console.log(rows); // ได้ข้อมูลตารางนำไปวนลูปแสดงผล HTML ได้ทันที
+  });
+💡 สรุปความต่าง
+วิธีที่ 1 (CSV): ทำง่าย โค้ดสั้น เหมาะกับข้อมูลข้อความและตัวเลขทั่วไป
+
+วิธีที่ 2 (gviz/JSON): ข้อมูลจัดหมวดหมู่มาตรฐาน อ่านค่าประเภทตัวเลข/เวลาได้แม่นยำกว่า
+
+ทั้งสองวิธีนี้คุณสามารถเปิดไฟล์ HTML บนคอมพิวเตอร์ หรือเอาไปฝากไว้บน GitHub Pages ได้โดยไม่ต้องพึ่ง Apps Script เลยครับ
+
+ยอดเยี่ยมเลยครับ! ลิงก์ CSV ที่ได้มาพร้อมใช้งานเรียบร้อยแล้วครับ
+
+ลิงก์ของคุณคือ:
+[https://docs.google.com/spreadsheets/d/e/2PACX-1vT_pS4D-eC3tkNhuCrTBYHB1czXd8bHERQDRuXCXPSYiAYL3u_julukAn8YwyvAichaaaEToi_f6oTM/pub?gid=279449078&single=true&output=csv](https://docs.google.com/spreadsheets/d/e/2PACX-1vT_pS4D-eC3tkNhuCrTBYHB1czXd8bHERQDRuXCXPSYiAYL3u_julukAn8YwyvAichaaaEToi_f6oTM/pub?gid=279449078&single=true&output=csv)
+
+ผมได้เขียนไฟล์ HTML/CSS/JS สไตล์ Cozy Café ที่ประกอบลิงก์ CSV นี้เข้าไปให้เรียบร้อยแล้วครับ โดยระบบจะดึงข้อมูลอันดับจาก Google Sheet ของคุณมาสร้างการ์ด Top 3 (Champion, 2nd, 3rd) และ ตารางอันดับหลัก ให้อัตโนมัติ พร้อมปุ่มกดดึงข้อมูลล่าสุด (Auto Refresh) ครับ
+
+ผมได้สร้างไฟล์ cozy_cafe_leaderboard.html ให้เรียบร้อยแล้ว คุณสามารถดาวน์โหลดไปเปิดใช้งานหรือนำโค้ดไปใช้ได้ทันทีครับ:
+
+Your HTML file is ready
+
+ไอคอน HTML
+cozy_cafe_leaderboard
+ HTML 
+☕ สิ่งที่โค้ด HTML นี้ทำให้อัตโนมัติ:
+ดีไซน์ Cozy Café: ใช้โทนสีเอสเพรสโซ, คาราเมล, ชานม, ชาไทย และครีม ฟอนต์ Tahoma ตรงตามธีมทั้งหมด
+
+ดึงข้อมูลจาก Google Sheets ตรง: ใช้ลิงก์ CSV ของคุณดึงข้อมูลแบบ Real-time โดยไม่ต้องพึ่ง Apps Script
+
+การ์ด Top 3 สไตล์ Podium: แสดงการ์ดอันดับ 1 (Champion สีคาราเมลใหญ่เด่น) พร้อมอันดับ 2 และ 3
+
+ตารางแสดงอันดับหลัก: แสดงตารางรายชื่อและคะแนนทั้งหมดด้านล่าง
+
+ปุ่มรีเฟรชข้อมูล (Auto-Fetch): กดปุ่มดึงคะแนนล่าสุดได้ตลอดเวลาโดยไม่ต้องกด F5 รีโหลดหน้าเว็บ
+
+คุณสามารถบันทึกไฟล์ .html นี้ไว้บนเครื่อง หรือนำไปอัปโหลดขึ้น GitHub Pages / เว็บไซต์ของคุณเพื่อเปิดโชว์แดชบอร์ดอันดับคะแนนได้ทันทีครับ!
+
+ต่อไปนำขึ้น github
+
+นำไฟล์ขึ้น GitHub Pages เพื่อแสดงผลเว็บ Leaderboard ออนไลน์ฟรี ทำได้ง่ายๆ ตามขั้นตอนดังนี้ครับ:
+
+📍 ขั้นตอนนำขึ้น GitHub Pages
+บันทึกโค้ดเป็นไฟล์ชื่อ index.html
+
+บันทึกไฟล์ HTML ที่ได้ลงในคอมพิวเตอร์ของคุณ แล้วตั้งชื่อไฟล์ว่า index.html (สำคัญมาก: ต้องใช้ชื่อนี้เพื่อให้ระบบเปิดหน้าเว็บให้อัตโนมัติ)
+
+สร้าง Repository ใหม่บน GitHub
+
+เข้าเว็บ GitHub.com แล้วล็อกอินเข้าใช้งาน
+
+กดปุ่ม + มุมขวาบน > เลือก New repository
+
+Repository name: ตั้งชื่อโปรเจกต์ เช่น cafe-leaderboard
+
+เลือกเป็น Public
+
+กดปุ่ม Create repository
+
+อัปโหลดไฟล์ขึ้น GitHub
+
+ในหน้าโปรเจกต์ที่เพิ่งสร้าง ให้มองหาข้อความ "uploading an existing file" แล้วกดคลิก
+
+ลากไฟล์ index.html วางลงในช่องอัปโหลด
+
+กดปุ่ม Commit changes ด้านล่างสุด
+
+เปิดใช้งาน GitHub Pages (Publish)
+
+ไปที่แท็บ Settings (เมนูด้านบนของโปรเจกต์)
+
+เมนูด้านซ้าย เลือกหัวข้อ Pages
+
+ในส่วน Build and deployment > หัวข้อ Branch:
+
+เปลี่ยนจาก None เป็น main (หรือ master)
+
+แล้วกด Save
+
+☕ ลิงก์เข้าชมหน้าเว็บ
+หลังจากกด Save ให้รอประมาณ 1–3 นาที หน้าเว็บจะประมวลผลเสร็จ แล้วจะมีแถบสีเขียวพร้อม URL ปรากฏขึ้นมาที่ด้านบนของหน้า Pages นั้น เช่น:
+
+https://<ชื่อผู้ใช้_GitHub>.github.io/cafe-leaderboard/
+
+คุณสามารถนำ URL นี้ไปเปิดบนมือถือ แท็บเล็ต หรือแชร์ให้ผู้อื่นเข้าดู Leaderboard คะแนนสไตล์ Cozy Café ได้ทันที และเมื่อมีข้อมูลใหม่อัปเดตใน Google Sheets หน้าเว็บนี้ก็จะดึงข้อมูลล่าสุดมาโชว์ให้อัตโนมัติครับ!
+
+ลืมเปลี่ยนชื่อไฟล์
+
+ไม่ต้องตกใจครับ! แก้ไขชื่อไฟล์บน GitHub ได้ง่ายๆ ภายในไม่กี่คลิกโดยไม่ต้องลบไฟล์อัปโหลดใหม่ตามขั้นตอนดังนี้ครับ:
+
+📍 วิธีเปลี่ยนชื่อไฟล์บน GitHub เป็น index.html
+เปิดหน้าโปรเจกต์ (Repository) ของคุณบน GitHub
+
+คลิกที่ชื่อไฟล์เดิมที่คุณเพิ่งอัปโหลดไป (เช่น cozy_cafe_leaderboard.html)
+
+ที่มุมขวาบนของกล่องแสดงโค้ด ให้มองหาไอคอน รูปดินสอ ✏️ (Edit this file) แล้วคลิกเข้าไป
+
+ด้านบนสุดตรงช่องพิมพ์ชื่อไฟล์ ให้เปลี่ยนชื่อเดิมเป็น index.html
+
+เลื่อนลงมาด้านล่างสุด กดปุ่มสีเขียว Commit changes... > แล้วกด Commit changes อีกครั้งเพื่อบันทึก
+
+💡 ตรวจสอบผลลัพธ์
+เมื่อเปลี่ยนเป็น index.html เรียบร้อยแล้ว ให้รอระบบ GitHub Pages ประมวลผลประมาณ 1–2 นาที จากนั้นลองกด รีเฟรช (Refresh) ลิงก์ GitHub Pages ของคุณอีกครั้ง หน้าเว็บ Leaderboard สไตล์ Cozy Café ก็จะแสดงผลขึ้นมาเรียบร้อยแล้วครับ!
+
+แล้ว HTML ก่อนหน้านี้ที่เราทำไว้จะหายไปไหม
+
+ไม่หายครับ! โค้ด HTML ดีไซน์ Cozy Café เดิมของคุณยังอยู่ครบถ้วนในไฟล์ index.html นั้นเลยครับ
+
+การเปลี่ยนชื่อไฟล์บน GitHub เป็นแค่การ "เปลี่ยนชื่อป้ายหน้าห้อง" ให้ระบบ GitHub Pages หาไฟล์แรกเจอเพื่อเปิดแสดงผลเป็นหน้าเว็บเท่านั้นครับ ตัวโครงสร้าง แท็ก HTML, CSS ตกแต่งโทนสีเอสเพรสโซ/คาราเมล และ JavaScript ดึงข้อมูลจาก Google Sheets ที่ใส่ไว้ ไม่ได้ถูกลบหรือแก้ไขเลยครับ
+
+💡 ตรวจสอบความเรียบร้อย
+ดูโค้ด: คลิกที่ไฟล์ index.html บน GitHub จะเห็นโค้ด HTML ทั้งหมดอยู่เหมือนเดิม
+
+ดูหน้าเว็บ: เมื่อรอประมาณ 1–2 นาทีหลัง Commit แล้ว ลองเข้าลิงก์ GitHub Pages ของคุณ หน้าเว็บ Leaderboard ดีไซน์เดิมจะแสดงผลทันทีครับ
+
+อาการค้างที่หน้า "กำลังโหลดข้อมูล..." เกิดจากปัญหาเรื่อง CORS (Cross-Origin Resource Sharing) หรือรูปแบบข้อมูล CSV ที่ดึงมาจาก Google Sheets ไม่ตรงกับโครงสร้างที่โค้ดรอรับครับ
+
+สามารถตรวจสอบและแก้ไขตามสาเหตุที่พบได้บ่อยที่สุด 2 จุดนี้ครับ:
+
+1. เช็กโครงสร้างคอลัมน์ใน Google Sheets
+โค้ดปัจจุบันดึงข้อมูลแบบเรียงลำดับคอลัมน์ดังนี้:
+
+คอลัมน์ A (คอลัมน์ที่ 1): อันดับ (เช่น 1, 2, 3)
+
+คอลัมน์ B (คอลัมน์ที่ 2): ชื่อผู้เล่น
+
+คอลัมน์ C (คอลัมน์ที่ 3): คะแนน
+
+วิธีแก้: ตรวจสอบใน Google Sheets แท็บ "อันดับคะแนน" ว่าเรียงคอลัมน์ตามนี้หรือไม่ และแถวที่ 1 เป็นหัวข้อตารางหรือไม่ครับ
+
+2. อัปเดตฟังก์ชัน JavaScript ดึงข้อมูล (แก้ปัญหา CORS & Parse)
+ให้ไปที่ GitHub > แก้ไขไฟล์ index.html แล้วเปลี่ยนเฉพาะส่วน <script> ที่อยู่ท้ายไฟล์เป็นชุดนี้ ซึ่งเพิ่มการจัดการข้อผิดพลาดและการแกะข้อมูล CSV ให้ยืดหยุ่นขึ้นครับ:
+
+HTML
 <script>
     const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT_pS4D-eC3tkNhuCrTBYHB1czXd8bHERQDRuXCXPSYiAYL3u_julukAn8YwyvAichaaaEToi_f6oTM/pub?gid=279449078&single=true&output=csv';
 
@@ -364,5 +580,443 @@
 
     window.onload = fetchLeaderboardData;
 </script>
+วิธีทดสอบอย่างรวดเร็ว
+หลังจากแก้ไขและกด Commit changes ใน GitHub แล้ว ให้กด F12 ในเบราว์เซอร์ เพื่อเปิด DevTools > ไปที่แท็บ Console
+
+รีเฟรชหน้าเว็บ หากยังมีข้อผิดพลาด จะแสดงข้อความสีแดงแจ้งเตือนใน Console ว่าติดปัญหาที่จุดใดครับ
+
+ขอโค้ด HTML ใหม่ทั้งหมด
+
+นี่คือโค้ด HTML/CSS/JS ใหม่ทั้งหมด ที่ปรับแก้ระบบการอ่านค่า CSV ให้ยืดหยุ่น ย่นเวลาโหลด และมีระบบจัดการข้อผิดพลาด (Error Handling) ที่ชัดเจน พร้อมคุมโทนสี Cozy Café (Espresso, Caramel, Milk Tea, Thai Tea, Cream) และฟอนต์ Tahoma ครบถ้วนครับ
+
+คุณสามารถคัดลอกโค้ดทั้งหมดนี้ ไปวางทับในไฟล์ index.html บน GitHub ได้เลยครับ:
+
+คุณสามารถดาวน์โหลดหรือคัดลอกโค้ดไฟล์ index.html ด้านล่างนี้ไปใช้งานบน GitHub ได้เลยครับ:
+
+ไอคอน HTML
+index
+ HTML 
+📌 สิ่งที่ปรับปรุงในโค้ดชุดใหม่นี้:
+แก้ปัญหาค้างหน้า "กำลังโหลด": ปรับปรุงฟังก์ชัน parseCSV() และ fetchLeaderboardData() ให้รองรับอัญประกาศและอักขระพิเศษใน CSV ของ Google Sheets
+
+ระบบอัตโนมัติจัดคอลัมน์: หากตารางใน Google Sheets มี 2 คอลัมน์ (ชื่อ, คะแนน) หรือ 3 คอลัมน์ (อันดับ, ชื่อ, คะแนน) ระบบจะตรวจจับและจัดวางตำแหน่งอันดับ ชื่อ และคะแนนให้อัตโนมัติ
+
+ดีไซน์ Cozy Café สมบูรณ์: คุมโทน Espresso, Caramel, Milk Tea, Thai Tea และ Cream พร้อมการจัดวาง Layout ที่อ่านง่าย มีผลการอัปเดตเวลาล่าสุดและปุ่มรีเฟรชข้อมูล
+
+
+
+
+Gemini เป็น AI และอาจทำผิดพลาดได้
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cozy Café Leaderboard</title>
+    <style>
+        /* Theme Colors: 
+           Espresso: #3E2723
+           Caramel:  #F5C77E
+           Milk Tea: #E0D5C1
+           Thai Tea: #FFCCBC
+           Cream:    #FDFBF7
+        */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tahoma', sans-serif;
+        }
+
+        body {
+            background-color: #FDFBF7;
+            color: #3E2723;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 30px 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: #FFFFFF;
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 10px 25px rgba(62, 39, 35, 0.08);
+            border: 1px solid #E0D5C1;
+        }
+
+        /* Header Banner */
+        .header-banner {
+            background-color: #3E2723;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 18px 20px;
+            border-radius: 16px;
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(62, 39, 35, 0.15);
+        }
+
+        /* Podium Cards Section */
+        .podium-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            border-radius: 18px;
+            padding: 20px 15px;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+        }
+
+        .card-badge {
+            font-size: 13px;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.7);
+            color: #3E2723;
+        }
+
+        .card-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #3E2723;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-score {
+            font-size: 26px;
+            font-weight: bold;
+            color: #3E2723;
+        }
+
+        /* Card Themes */
+        .card-rank-1 {
+            background-color: #F5C77E; /* Caramel */
+            border: 2px solid #E6B055;
+            grid-column: span 3;
+        }
+
+        @media (min-width: 600px) {
+            .card-rank-1 { grid-column: span 3; }
+            .card-rank-2, .card-rank-3 { grid-column: span 1.5; }
+        }
+
+        .card-rank-2 {
+            background-color: #E0D5C1; /* Milk Tea */
+            border: 1px solid #C8BC9E;
+        }
+
+        .card-rank-3 {
+            background-color: #FFCCBC; /* Thai Tea */
+            border: 1px solid #E6B2A2;
+        }
+
+        /* Table Section */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 14px;
+            border: 1px solid #E0D5C1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            background-color: #FFFFFF;
+        }
+
+        th {
+            background-color: #3E2723;
+            color: #FFFFFF;
+            padding: 14px 18px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 12px 18px;
+            border-bottom: 1px solid #F0EAE1;
+            font-size: 14px;
+            color: #3E2723;
+        }
+
+        tr:nth-child(even) {
+            background-color: #FAF7F2;
+        }
+
+        tr:hover {
+            background-color: #F5EFE6;
+        }
+
+        .rank-col {
+            width: 80px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .score-col {
+            width: 120px;
+            text-align: right;
+            font-weight: bold;
+            color: #D35400;
+        }
+
+        /* Footer & Reload Button */
+        .footer-tools {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #8D6E63;
+        }
+
+        .btn-refresh {
+            background-color: #3E2723;
+            color: #FFFFFF;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .btn-refresh:hover {
+            background-color: #5D4037;
+        }
+
+        .loading-text {
+            text-align: center;
+            padding: 30px;
+            font-size: 15px;
+            color: #8D6E63;
+            grid-column: span 3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header Banner -->
+    <div class="header-banner">
+        ☕ Cafe De Memories - Daily Quiz Leaderboard
+    </div>
+
+    <!-- Top 3 Cards -->
+    <div class="podium-container" id="podium">
+        <div class="loading-text">⏳ กำลังโหลดข้อมูลอันดับ...</div>
+    </div>
+
+    <!-- Main Table -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="rank-col">อันดับ</th>
+                    <th>ชื่อผู้เล่น</th>
+                    <th class="score-col">คะแนน</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <tr>
+                    <td colspan="3" class="loading-text">⏳ กำลังดึงข้อมูลจาก Google Sheets...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer Tools -->
+    <div class="footer-tools">
+        <span id="last-updated">อัปเดตล่าสุด: -</span>
+        <button class="btn-refresh" onclick="fetchLeaderboardData()">🔄 รีเฟรชข้อมูล</button>
+    </div>
+</div>
+
+<script>
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT_pS4D-eC3tkNhuCrTBYHB1czXd8bHERQDRuXCXPSYiAYL3u_julukAn8YwyvAichaaaEToi_f6oTM/pub?gid=279449078&single=true&output=csv';
+
+    function fetchLeaderboardData() {
+        document.getElementById('last-updated').innerText = 'กำลังอัปเดต...';
+
+        fetch(csvUrl + '&t=' + new Date().getTime())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('ไม่สามารถเข้าถึงไฟล์ CSV ได้');
+                }
+                return response.text();
+            })
+            .then(csvText => {
+                const rows = parseCSV(csvText);
+                // กรองเอาเฉพาะแถวที่มีข้อมูล
+                const validRows = rows.filter(r => r.length >= 2 && r.some(cell => cell.trim() !== ''));
+
+                if (validRows.length <= 1) {
+                    showError('ไม่พบข้อมูลอันดับในระบบ');
+                    return;
+                }
+
+                // ตัดแถวหัวตาราง (Header) ออก
+                const data = validRows.slice(1);
+
+                renderPodium(data);
+                renderTable(data);
+
+                const now = new Date();
+                document.getElementById('last-updated').innerText = 'อัปเดตล่าสุด: ' + now.toLocaleTimeString('th-TH');
+            })
+            .catch(err => {
+                console.error('Fetch error:', err);
+                showError('เกิดข้อผิดพลาดในการโหลดข้อมูล โปรดตรวจสอบการตั้งค่า Publish ใน Google Sheets');
+            });
+    }
+
+    // ฟังก์ชันแกะไฟล์ CSV รองรับข้อความที่มีอัญประกาศ
+    function parseCSV(text) {
+        const lines = text.split(/
+?
+/);
+        return lines.map(line => {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim().replace(/^"(.*)"$/, '$1'));
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current.trim().replace(/^"(.*)"$/, '$1'));
+            return result;
+        });
+    }
+
+    function renderPodium(data) {
+        const podiumContainer = document.getElementById('podium');
+        if (!data || data.length === 0) {
+            podiumContainer.innerHTML = '';
+            return;
+        }
+
+        let html = '';
+
+        // ช่วยดึงชื่อและคะแนนโดยอัตโนมัติ ไม่ว่าคอลัมน์จะสลับกันหรือไม่
+        const getItem = (row) => {
+            if (!row) return { rank: '', name: '-', score: '0' };
+            if (row.length === 2) {
+                return { rank: '1', name: row[0], score: row[1] };
+            }
+            return { rank: row[0] || '', name: row[1] || '-', score: row[2] || row[1] || '0' };
+        };
+
+        // Rank 1
+        if (data[0]) {
+            const p1 = getItem(data[0]);
+            html += `
+                <div class="card card-rank-1">
+                    <div class="card-badge">🏆 CHAMPION</div>
+                    <div class="card-name">${p1.name}</div>
+                    <div class="card-score">${p1.score} คะแนน</div>
+                </div>
+            `;
+        }
+
+        // Rank 2
+        if (data[1]) {
+            const p2 = getItem(data[1]);
+            html += `
+                <div class="card card-rank-2">
+                    <div class="card-badge">🥈 อันดับ 2</div>
+                    <div class="card-name">${p2.name}</div>
+                    <div class="card-score">${p2.score} คะแนน</div>
+                </div>
+            `;
+        }
+
+        // Rank 3
+        if (data[2]) {
+            const p3 = getItem(data[2]);
+            html += `
+                <div class="card card-rank-3">
+                    <div class="card-badge">🥉 อันดับ 3</div>
+                    <div class="card-name">${p3.name}</div>
+                    <div class="card-score">${p3.score} คะแนน</div>
+                </div>
+            `;
+        }
+
+        podiumContainer.innerHTML = html;
+    }
+
+    function renderTable(data) {
+        const tableBody = document.getElementById('table-body');
+        if (!data || data.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center;">ไม่มีข้อมูลอันดับ</td></tr>';
+            return;
+        }
+
+        let html = '';
+        data.forEach((row, index) => {
+            let rank, name, score;
+            if (row.length === 2) {
+                rank = index + 1;
+                name = row[0] || '-';
+                score = row[1] || '0';
+            } else {
+                rank = row[0] || (index + 1);
+                name = row[1] || '-';
+                score = row[2] || row[1] || '0';
+            }
+
+            html += `
+                <tr>
+                    <td class="rank-col">${rank}</td>
+                    <td>${name}</td>
+                    <td class="score-col">${score}</td>
+                </tr>
+            `;
+        });
+
+        tableBody.innerHTML = html;
+    }
+
+    function showError(msg) {
+        document.getElementById('podium').innerHTML = '';
+        document.getElementById('table-body').innerHTML = `<tr><td colspan="3" style="text-align:center; color:#D35400; padding:25px;">⚠️ ${msg}</td></tr>`;
+    }
+
+    // เรียกดึงข้อมูลเมื่อโหลดหน้าเว็บ
+    window.onload = fetchLeaderboardData;
+</script>
+
 </body>
 </html>
