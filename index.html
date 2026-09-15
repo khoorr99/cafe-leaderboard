@@ -5,13 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cozy Café Leaderboard</title>
     <style>
-        /* Theme Colors: 
-           Espresso: #3E2723
-           Caramel:  #F5C77E
-           Milk Tea: #E0D5C1
-           Thai Tea: #FFCCBC
-           Cream:    #FDFBF7
-        */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -39,7 +32,6 @@
             border: 1px solid #E0D5C1;
         }
 
-        /* Header Banner */
         .header-banner {
             background-color: #3E2723;
             color: #FFFFFF;
@@ -53,7 +45,6 @@
             box-shadow: 0 4px 12px rgba(62, 39, 35, 0.15);
         }
 
-        /* Podium Cards Section */
         .podium-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -96,14 +87,19 @@
         }
 
         .card-score {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: bold;
             color: #3E2723;
         }
 
-        /* Card Themes */
+        .card-time {
+            font-size: 13px;
+            color: #6D4C41;
+            margin-top: 4px;
+        }
+
         .card-rank-1 {
-            background-color: #F5C77E; /* Caramel */
+            background-color: #F5C77E;
             border: 2px solid #E6B055;
             grid-column: span 3;
         }
@@ -114,16 +110,15 @@
         }
 
         .card-rank-2 {
-            background-color: #E0D5C1; /* Milk Tea */
+            background-color: #E0D5C1;
             border: 1px solid #C8BC9E;
         }
 
         .card-rank-3 {
-            background-color: #FFCCBC; /* Thai Tea */
+            background-color: #FFCCBC;
             border: 1px solid #E6B2A2;
         }
 
-        /* Table Section */
         .table-container {
             overflow-x: auto;
             border-radius: 14px;
@@ -168,12 +163,17 @@
 
         .score-col {
             width: 120px;
-            text-align: right;
+            text-align: center;
             font-weight: bold;
             color: #D35400;
         }
 
-        /* Footer & Reload Button */
+        .time-col {
+            width: 140px;
+            text-align: right;
+            color: #6D4C41;
+        }
+
         .footer-tools {
             display: flex;
             justify-content: space-between;
@@ -211,35 +211,32 @@
 <body>
 
 <div class="container">
-    <!-- Header Banner -->
     <div class="header-banner">
         ☕ Cafe De Memories - Daily Quiz Leaderboard
     </div>
 
-    <!-- Top 3 Cards -->
     <div class="podium-container" id="podium">
         <div class="loading-text">⏳ กำลังโหลดข้อมูลอันดับ...</div>
     </div>
 
-    <!-- Main Table -->
     <div class="table-container">
         <table>
             <thead>
                 <tr>
                     <th class="rank-col">อันดับ</th>
-                    <th>ชื่อผู้เล่น</th>
+                    <th>ชื่อ-นามสกุล</th>
                     <th class="score-col">คะแนน</th>
+                    <th class="time-col">เวลาที่ใช้สอบ</th>
                 </tr>
             </thead>
             <tbody id="table-body">
                 <tr>
-                    <td colspan="3" class="loading-text">⏳ กำลังดึงข้อมูลจาก Google Sheets...</td>
+                    <td colspan="4" class="loading-text">⏳ กำลังดึงข้อมูลจาก Google Sheets...</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <!-- Footer Tools -->
     <div class="footer-tools">
         <span id="last-updated">อัปเดตล่าสุด: -</span>
         <button class="btn-refresh" onclick="fetchLeaderboardData()">🔄 รีเฟรชข้อมูล</button>
@@ -247,13 +244,11 @@
 </div>
 
 <script>
-    // URL Google Sheets CSV ที่ถูกต้องล่าสุด
     const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT_pS4D-eC3tkNhuCrTBYHBIczXd8bHERQDRuXCXPSYiAYL3u_julukAn8YwyvAichaaaEToi_f6oTM/pub?gid=279449078&single=true&output=csv';
 
     function fetchLeaderboardData() {
         document.getElementById('last-updated').innerText = 'กำลังอัปเดต...';
 
-        // ดึงข้อมูลพร้อมบังคับแปลงรหัสภาษาไทยด้วย TextDecoder (UTF-8)
         fetch(csvUrl + '&t=' + new Date().getTime())
             .then(response => {
                 if (!response.ok) {
@@ -262,22 +257,28 @@
                 return response.arrayBuffer();
             })
             .then(buffer => {
-                // ถอดรหัสภาษาไทยให้ถูกต้อง
                 const decoder = new TextDecoder('utf-8');
                 const csvText = decoder.decode(buffer);
 
-                const rows = parseCSV(csvText);
-                const validRows = rows.filter(r => r.length >= 2 && r.some(cell => cell.trim() !== ''));
-
-                if (validRows.length <= 1) {
+                // แยกบรรทัด
+                const lines = csvText.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+                
+                if (lines.length <= 1) {
                     showError('ไม่พบข้อมูลอันดับในระบบ');
                     return;
                 }
 
-                const data = validRows.slice(1);
+                // ข้ามแถว Header (บรรทัดแรก)
+                const dataRows = lines.slice(1);
+                const parsedData = dataRows.map(line => parseCSVLine(line)).filter(row => row.length >= 2);
 
-                renderPodium(data);
-                renderTable(data);
+                if (parsedData.length === 0) {
+                    showError('ไม่พบข้อมูลอันดับในระบบ');
+                    return;
+                }
+
+                renderPodium(parsedData);
+                renderTable(parsedData);
 
                 const now = new Date();
                 document.getElementById('last-updated').innerText = 'อัปเดตล่าสุด: ' + now.toLocaleTimeString('th-TH');
@@ -288,27 +289,35 @@
             });
     }
 
-    function parseCSV(text) {
-        const lines = text.split(/\\r?\\n/);
-        return lines.map(line => {
-            const result = [];
-            let current = '';
-            let inQuotes = false;
+    // ตัวอ่าน CSV ที่รองรับเครื่องหมายคำพูดและเว้นวรรค
+    function parseCSVLine(text) {
+        const result = [];
+        let current = '';
+        let inQuotes = false;
 
-            for (let i = 0; i < line.length; i++) {
-                const char = line[i];
-                if (char === '"') {
-                    inQuotes = !inQuotes;
-                } else if (char === ',' && !inQuotes) {
-                    result.push(current.trim().replace(/^"(.*)"$/, '$1'));
-                    current = '';
-                } else {
-                    current += char;
-                }
+        for (let i = 0; i < text.length; i++) {
+            const char = text[i];
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                result.push(current.trim().replace(/^"(.*)"$/, '$1'));
+                current = '';
+            } else {
+                current += char;
             }
-            result.push(current.trim().replace(/^"(.*)"$/, '$1'));
-            return result;
-        });
+        }
+        result.push(current.trim().replace(/^"(.*)"$/, '$1'));
+        return result;
+    }
+
+    // ดึงค่าตามคอลัมน์ A = Rank, B = Name, C = Score, D = Time
+    function getItemData(row, index) {
+        return {
+            rank: row[0] || (index + 1),
+            name: row[1] || 'ไม่ระบุชื่อ',
+            score: row[2] || '-',
+            time: row[3] || '-'
+        };
     }
 
     function renderPodium(data) {
@@ -320,43 +329,38 @@
 
         let html = '';
 
-        const getItem = (row) => {
-            if (!row) return { rank: '', name: '-', score: '0' };
-            if (row.length === 2) {
-                return { rank: '1', name: row[0], score: row[1] };
-            }
-            return { rank: row[0] || '', name: row[1] || '-', score: row[2] || row[1] || '0' };
-        };
-
         if (data[0]) {
-            const p1 = getItem(data[0]);
+            const p1 = getItemData(data[0], 0);
             html += `
                 <div class="card card-rank-1">
                     <div class="card-badge">🏆 CHAMPION</div>
                     <div class="card-name">${p1.name}</div>
                     <div class="card-score">${p1.score} คะแนน</div>
+                    <div class="card-time">⏱️ ${p1.time}</div>
                 </div>
             `;
         }
 
         if (data[1]) {
-            const p2 = getItem(data[1]);
+            const p2 = getItemData(data[1], 1);
             html += `
                 <div class="card card-rank-2">
                     <div class="card-badge">🥈 อันดับ 2</div>
                     <div class="card-name">${p2.name}</div>
-                    <div class="card-score">${p2.score} คะแนน</div>
+                    <div class="card-score">${p2.score}</div>
+                    <div class="card-time">⏱️ ${p2.time}</div>
                 </div>
             `;
         }
 
         if (data[2]) {
-            const p3 = getItem(data[2]);
+            const p3 = getItemData(data[2], 2);
             html += `
                 <div class="card card-rank-3">
                     <div class="card-badge">🥉 อันดับ 3</div>
                     <div class="card-name">${p3.name}</div>
-                    <div class="card-score">${p3.score} คะแนน</div>
+                    <div class="card-score">${p3.score}</div>
+                    <div class="card-time">⏱️ ${p3.time}</div>
                 </div>
             `;
         }
@@ -366,29 +370,16 @@
 
     function renderTable(data) {
         const tableBody = document.getElementById('table-body');
-        if (!data || data.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center;">ไม่มีข้อมูลอันดับ</td></tr>';
-            return;
-        }
-
         let html = '';
-        data.forEach((row, index) => {
-            let rank, name, score;
-            if (row.length === 2) {
-                rank = index + 1;
-                name = row[0] || '-';
-                score = row[1] || '0';
-            } else {
-                rank = row[0] || (index + 1);
-                name = row[1] || '-';
-                score = row[2] || row[1] || '0';
-            }
 
+        data.forEach((row, index) => {
+            const item = getItemData(row, index);
             html += `
                 <tr>
-                    <td class="rank-col">${rank}</td>
-                    <td>${name}</td>
-                    <td class="score-col">${score}</td>
+                    <td class="rank-col">${item.rank}</td>
+                    <td>${item.name}</td>
+                    <td class="score-col">${item.score}</td>
+                    <td class="time-col">${item.time}</td>
                 </tr>
             `;
         });
@@ -398,7 +389,7 @@
 
     function showError(msg) {
         document.getElementById('podium').innerHTML = '';
-        document.getElementById('table-body').innerHTML = `<tr><td colspan="3" style="text-align:center; color:#D35400; padding:25px;">⚠️ ${msg}</td></tr>`;
+        document.getElementById('table-body').innerHTML = `<tr><td colspan="4" style="text-align:center; color:#D35400; padding:25px;">⚠️ ${msg}</td></tr>`;
     }
 
     window.onload = fetchLeaderboardData;
@@ -406,7 +397,3 @@
 
 </body>
 </html>
-"""
-
-with open("index.html", "w", encoding="utf-8") as f:
-    f.write(full_html_updated_v2)
